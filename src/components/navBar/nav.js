@@ -1,10 +1,10 @@
 import React from 'react';
 import './nav.css';
+import { Link } from 'react-router-dom';
 
-class NavBar extends React.Component {
-  render() {
-    return (
-      <>
+function NavBar() {
+  return (
+    <>
             <div className="nav">
         <input type="checkbox" id="nav-check"/>
         <div className="nav-header">
@@ -21,17 +21,13 @@ class NavBar extends React.Component {
         </div>
         
         <div className="nav-links">
-          <a href="#" target="_blank">home</a>
-          <a href="#" target="_blank">something</a>
-          <a href="#" target="_blank">something</a>
-          <a href="#" target="_blank">something</a>
-          <a href="#" target="_blank">something</a>
+        <Link to="/">Home</Link>
+        <Link to="/contacts">Contacts</Link>
         </div>
       </div>
-      </>
+    </>
   
-    );
-  }
+  );
 }
   
 export default NavBar;

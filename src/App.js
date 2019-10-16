@@ -10,13 +10,13 @@ import OAuth from './components/oauth/OAuth';
 export default function App() {
   return (
     <>
-      <NavBar />
       <BrowserRouter>
+      <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route exact path="/casePage" component={CasePage}/>
-          <Route exact path="/oauth" component={OAuth}/>
           <Route exact path="/contacts" component={Contacts}/>
+          <Route exact path="/oauth" component={OAuth}/>
         </Switch>
       </BrowserRouter>
     </>
