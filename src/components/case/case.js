@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-// import ReactTable from 'react-table';
+import React, { useState, useReducer } from 'react';
+import './case.scss';
+// import { Link } from 'react-router-dom';
+// import { connect } from 'react-redux';
+// import Contact from '../contact/contact'; //TODO: check other team
 
 // import CaseNote from './case-note/case-note';
 // import Search from './search/search';
@@ -59,7 +60,36 @@ function Case(props) {
 
   return (
     <>
-      {ready ? <CaseForm /> : null}
+      <h2 className= "caseTitle">{caseTitle}: Case Map</h2>
+      {/* <Link to="/">Home</Link> */}
+      <form>
+        <p>Case Title: {caseTitle}</p>
+        <label> Current Status
+          <select value={caseStatus} onChange={handleStatusChange}>
+            <option value='unset'>Unset</option>
+            <option value='in-progress'>In Progress</option>
+            <option value='closed'>Closed</option>
+          </select>
+        </label>
+        <label> Referral
+          <select value={referral} onChange={handleReferralChange}>
+            <option value='no'>No</option>
+            <option value='yes'>Yes</option>
+          </select>
+        </label>
+        <label> Legal Plan
+          <select value={legalPlan} onChange={handleLegalPlanChange}>
+            <option value='default'>Default</option>
+            <option value='family'>Family</option>
+            <option value='criminal'>Criminal</option>
+          </select>
+        </label>
+      </form>
+
+      <h5>Case Notes</h5>
+      {notes.map((note, index) => (
+        <p key={index}>{note}</p>
+      ))}
     </>
   );
 }
