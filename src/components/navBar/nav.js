@@ -1,5 +1,6 @@
 import React from 'react';
 import './nav.css';
+import { Link } from 'react-router-dom';
 
 class NavBar extends React.Component {
   render() {
@@ -21,11 +22,12 @@ class NavBar extends React.Component {
         </div>
         
         <div className="nav-links">
-          <a href="#" target="_blank">home</a>
+          <Link to="/">Home</Link>
+          {/* doesnt belong on nav NavBar */}
+          <Link to="/casePage">CasePage</Link>
+          {/* <a href="#" target="_blank">something</a>
           <a href="#" target="_blank">something</a>
-          <a href="#" target="_blank">something</a>
-          <a href="#" target="_blank">something</a>
-          <a href="#" target="_blank">something</a>
+          <a href="#" target="_blank">something</a> */}
         </div>
       </div>
       </>
