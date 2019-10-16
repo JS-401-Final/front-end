@@ -10,6 +10,7 @@ import OAuth from './components/oauth/OAuth';
 export default function App() {
   return (
     <>
+      <OAuth />
       <BrowserRouter>
       <NavBar />
         <Switch>
