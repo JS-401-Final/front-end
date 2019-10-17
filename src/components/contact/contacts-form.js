@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -31,6 +31,12 @@ const Contacts = (props) => {
   const [contactMobilePhone, setMobilePhone] = useState('');
   const [contactFax, setFax] = useState('');
   const [contactComments, setComments] = useState('');
+
+
+  useEffect(() => {
+    props.fetchContacts()
+      .then((result) => (result));
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -68,6 +74,8 @@ const Contacts = (props) => {
          <li key={_id}>
            <p>Last Name: {contact.lastName}</p>
            <p>First Name: {contact.firstName}</p>
+           <p> Phone Number: {contact.phoneNumber}</p>
+           <p>E-Mail: {contact.eMail}</p>
            <p>SSN: {contact.socialSecurity}</p>
            <p>Birthdate: {contact.birthdate}</p>
            <p>Home Street Address: {contact.homeStreet}</p>
@@ -229,7 +237,7 @@ const Contacts = (props) => {
                     placeholder='Additional Comments'
                 />
                 <button type="submit">Add Contact</button>
-                
+
             </form>
       </div>
     </>
