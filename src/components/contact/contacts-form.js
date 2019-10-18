@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
+
+import { useAlert } from 'react-alert';
+
 import PropTypes from 'prop-types';
-
 import './contact.scss';
-
 import { connect } from 'react-redux';
-
 import contactActions from '../../store/actions/contacts-action';
+
 
 /**
  * Contactas component allows users to add new contact informations to database
  * @visibleName Contacts
  */
 const Contacts = (props) => {
+  const alert = useAlert();
+
   const [contactLastName, setLastName] = useState('');
   const [contactFirstName, setFirstName] = useState('');
   const [contactSocialSecurity, setSocialSecurity] = useState('');
@@ -35,185 +38,238 @@ const Contacts = (props) => {
   const [contactMobilePhone, setMobilePhone] = useState('');
   const [contactFax, setFax] = useState('');
   const [contactComments, setComments] = useState('');
-
-
   useEffect(() => {
     props.fetchContacts(props.user.token)
       .then((result) => (result));
   }, []);
 
+  function clearState() {
+    setLastName('');
+    setFirstName('');
+    setSocialSecurity('');
+    setBirthdate('');
+    setHomeStreet('');
+    setHomeStreet2('');
+    setHomeCity('');
+    setHomeState('');
+    setHomeZip('');
+    setWorkCompanyName('');
+    setWorkStreet('');
+    setWorkStreet2('');
+    setWorkCity('');
+    setWorkState('');
+    setWorkZip('');
+    setEmailMain('');
+    setEMailBackup('');
+    setPrimaryPhone('');
+    setSecondaryPhone('');
+    setMobilePhone('');
+    setFax('');
+    setComments('');
+  }
   function handleSubmit(event) {
     event.preventDefault();
     props.addContact({
       lastName: contactLastName,
-      firstName: contactFirstName, 
+      firstName: contactFirstName,
       socialSecurity: contactSocialSecurity,
-      birthdate: contactBirthdate,
+      // birthdate: contactBirthdate,
       homeStreet: contactHomeStreet,
       homeStreet2: contactHomeStreet2,
       homeCity: contactHomeCity,
       homeState: contactHomeState,
       homeZip: contactHomeZip,
-      workCompanyName: contactWorkCompanyName,
+      // workCompanyName: contactWorkCompanyName,
       workStreet: contactWorkStreet,
       workStreet2: contactWorkStreet2,
-      workCity: contactWorkCity,
-      workState: contactWorkState,
-      workZip: contactWorkZip,
+      // workCity: contactWorkCity,
+      // workState: contactWorkState,
+      // workZip: contactWorkZip,
       emailMain: contactEmailMain,
       emailBackup: contactEmailBackup,
-      primaryPhone: contactPrimaryPhone, 
-      secondaryPhone: contactSecondaryPhone,
-      mobilePhone: contactMobilePhone,
+      workPhone: contactPrimaryPhone,
+      homePhone: contactSecondaryPhone,
+      cellPhone: contactMobilePhone,
       fax: contactFax,
-      comments: contactComments,
-    }, props.user.token);
+      contactComment: contactComments,
+    }, props.user.token)
+      .then(() => alert.show('Success!'))
+      .then(() => clearState());
   }
-
   return (
     <React.Fragment>
-       
+
+        {/* <ul>
+            {props.contacts.map((contact, _id) => (
+         <li key={_id}>
+           <p>Last Name: {contact.lastName}</p>
+           <p>First Name: {contact.firstName}</p>
+           <p> Phone Number: {contact.phoneNumber}</p>
+           <p>E-Mail: {contact.eMail}</p>
+           <p>SSN: {contact.socialSecurity}</p>
+           <p>Birthdate: {contact.birthdate}</p>
+           <p>Home Street Address: {contact.homeStreet}</p>
+           <p>Home Street Address 2: {contact.homeStreet2}</p>
+           <p>Home City: {contact.homeCity}</p>
+           <p>Home State: {contact.homeState}</p>
+           <p>Home Zip: {contact.homeZip}</p>
+           <p>Company Name: {contact.workCompanyName}</p>
+           <p>Work Street Address: {contact.workStreet}</p>
+           <p>Work Street Address 2: {contact.workStreet2}</p>
+           <p>Work City: {contact.workCity}</p>
+           <p>Work State: {contact.workState}</p>
+           <p>Work Zip: {contact.workZip}</p>
+           <p>Main E-mail: {contact.emailMain}</p>
+           <p>Backup E-mail: {contact.emailBackup}</p>
+           <p>Primary Phone: {contact.primaryPhone}</p>
+           <p>Secondary Phone: {contact.secondaryPhone}</p>
+           <p>Mobile Phone: {contact.mobilePhone}</p>
+           <p>Fax: {contact.fax}</p>
+           <p>Contact Notes: {contact.comments}</p>
+          </li>
+            ))}
+        </ul> */}
       <div className='container'>
         <h1> Add Contacts</h1>
             <div className = "inputForm">
             <form onSubmit={handleSubmit}>
-                <input 
+                <input
                     type='text'
                     value={contactLastName}
                     onChange={(event) => setLastName(event.target.value)}
                     placeholder='Last Name'
                 />
-                 <input 
+                 <input
                     type='text'
                     value={contactFirstName}
                     onChange={(event) => setFirstName(event.target.value)}
                     placeholder='First Name'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactSocialSecurity}
                     onChange={(event) => setSocialSecurity(event.target.value)}
                     placeholder='SSN'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactBirthdate}
                     onChange={(event) => setBirthdate(event.target.value)}
                     placeholder='Birthdate'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactHomeStreet}
                     onChange={(event) => setHomeStreet(event.target.value)}
                     placeholder='Home Street Address'
                 />
-                 <input 
+                 <input
                     type='text'
                     value={contactHomeStreet2}
                     onChange={(event) => setHomeStreet2(event.target.value)}
                     placeholder='Home Street Address 2'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactHomeCity}
                     onChange={(event) => setHomeCity(event.target.value)}
                     placeholder='Home City'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactHomeState}
                     onChange={(event) => setHomeState(event.target.value)}
                     placeholder='Home State'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactHomeZip}
                     onChange={(event) => setHomeZip(event.target.value)}
                     placeholder='Home Zip'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactWorkCompanyName}
                     onChange={(event) => setWorkCompanyName(event.target.value)}
                     placeholder='Work Company Name'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactWorkStreet}
                     onChange={(event) => setWorkStreet(event.target.value)}
                     placeholder='Work Street Address'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactWorkStreet2}
                     onChange={(event) => setWorkStreet2(event.target.value)}
                     placeholder='Work Street Address 2'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactWorkCity}
                     onChange={(event) => setWorkCity(event.target.value)}
                     placeholder='Work City'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactWorkState}
                     onChange={(event) => setWorkState(event.target.value)}
                     placeholder='Work State'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactWorkZip}
                     onChange={(event) => setWorkZip(event.target.value)}
                     placeholder='Work Zip'
                 />
-                 <input 
+                 <input
                     className="tableColor"
                     type='text'
                     value={contactEmailMain}
                     onChange={(event) => setEmailMain(event.target.value)}
                     placeholder='Main E-mail'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactEmailBackup}
                     onChange={(event) => setEMailBackup(event.target.value)}
                     placeholder='Backup E-mail'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactPrimaryPhone}
                     onChange={(event) => setPrimaryPhone(event.target.value)}
                     placeholder='Primary Phone'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactSecondaryPhone}
                     onChange={(event) => setSecondaryPhone(event.target.value)}
                     placeholder='Secondary Phone'
                 />
-                <input 
+                <input
                     className="tableColor"
                     type='text'
                     value={contactMobilePhone}
                     onChange={(event) => setMobilePhone(event.target.value)}
                     placeholder='Mobile Phone'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactFax}
                     onChange={(event) => setFax(event.target.value)}
                     placeholder='Fax'
                 />
-                <input 
+                <input
                     type='text'
                     value={contactComments}
                     onChange={(event) => setComments(event.target.value)}
@@ -223,22 +279,21 @@ const Contacts = (props) => {
             </form>
             </div>
       </div>
+
     </React.Fragment>
-            
+
   );
 };
-
-
 const mapStateToProps = (state) => ({
   contacts: state.contacts,
   user: state.user,
 });
-  
+
 const mapDispatchToProps = (dispatch) => ({
   fetchContacts: (token) => dispatch(contactActions.fetchContacts(token)),
   addContact: (data, token) => dispatch(contactActions.addContact(data, token)),
 });
-  
+
 Contacts.propTypes = {
   /**
    * Contacts label.
@@ -248,6 +303,4 @@ Contacts.propTypes = {
   contacts: PropTypes.array,
   user: PropTypes.object,
 };
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

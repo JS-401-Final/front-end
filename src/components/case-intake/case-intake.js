@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 
+import {
+  transitions, positions, useAlert, Provider as AlertProvider, 
+} from 'react-alert';
+
+import AlertTemplate from 'react-alert-template-basic';
+
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
 import { addNewCase } from '../../store/actions/case-action';
+
+const options = {
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  transition: transitions.SCALE,
+};
 
 /**
  * CaseIntake components collects new data from users and save it to database
@@ -17,6 +30,16 @@ const CaseIntake = (props) => {
   const [legalPlan, setLegalPlan] = useState('');
   const [newCaseNotes, setNewCaseNotes] = useState('');
 
+  const alert = useAlert();
+
+  
+  const clearState = () => {
+    setClient({ });
+    setCaseStatus('');
+    setReferralType('');
+    setLegalPlan('');
+    setNewCaseNotes('');
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -56,7 +79,10 @@ const CaseIntake = (props) => {
           content: newCaseNotes,
         },
       },
-    }, props.user.token);
+
+    }, props.user.token)
+      .then(() => alert.show('Success!'))
+      .then(() => clearState());
   }
 
   function handleLegalPlanChange(event) {
@@ -75,6 +101,8 @@ const CaseIntake = (props) => {
 
   return (
     <>
+    <AlertProvider template={AlertTemplate} {...options}>
+
       <div className='container'>
         <h1> Case Intake </h1>
         <h3>Edit New Case </h3>
@@ -255,8 +283,10 @@ const CaseIntake = (props) => {
 
         </div>
         <button onClick={handleSubmit}> Save Data </button>
-      </form>
-      </div>
+      </form>  
+    </div>
+
+    </AlertProvider>
     </>
   );
 };
